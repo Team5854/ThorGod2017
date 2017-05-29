@@ -50,10 +50,32 @@ public class TalonDrive {
 		}
 		
 		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
+	
 	}
 	public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
 		roboDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
 	}
+	public void arcadeDrive(double moveValue, double rotateValue) {
+		roboDrive.arcadeDrive(moveValue, rotateValue);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Method that changes the front two motors to position and the rest to follower.
+	 */
 	public void setToAuto() {
 		for (int i = 0; i < 2; i++) {
 			list[0].changeControlMode(CANTalon.TalonControlMode.Position); //Change control mode of talon, default is PercentVbus (-1.0 to 1.0)
@@ -69,10 +91,19 @@ public class TalonDrive {
 			list[i+1].set(list[1].getDeviceID());	
 		}
 	}
+	
+	/**
+	 * tells the front two motors to move until encoders reach set pos.
+	 * @param pos - position you wish to go to.
+	 */
 	public void moveToPosition(double pos) {
 		list[0].set(pos);
 		list[1].set(pos);
 	}
+	
+	/**
+	 * returns the drive system back to %VBus for teleop control.
+	 */
 	public void setToTeleop() {
 		for (int i = 0; i < 4; i++) {
 			list[i].changeControlMode(CANTalon.TalonControlMode.PercentVbus); //Change control mode of talon, default is PercentVbus (-1.0 to 1.0)
