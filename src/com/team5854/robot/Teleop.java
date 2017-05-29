@@ -7,7 +7,6 @@ public class Teleop {
 		drive.setToTeleop();
 	}
 	public static void periodic() {
-		
 	}
 
 }
