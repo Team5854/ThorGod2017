@@ -11,6 +11,7 @@ public class TalonDrive {
 	CANTalon rl1, rl2;
 	CANTalon rr1, rr2;
 	CANTalon[] list = {fl1, fr1, rl1, rr1, fl2, fr2, rl2, rr2};
+	
 	/**
 	 * Create a basic drive train. <br>
 	 * if isEight is true, creates an eight motor drive train. <br>
@@ -37,31 +38,104 @@ public class TalonDrive {
 			//create second set of motors
 			list[4] = new CANTalon(5);	
 			list[4].changeControlMode(CANTalon.TalonControlMode.Follower);
-			list[4].set(fl1.getDeviceID());
+			list[4].set(list[0].getDeviceID());
 			list[5] = new CANTalon(7);	
 			list[5].changeControlMode(CANTalon.TalonControlMode.Follower);
-			list[5].set(fr1.getDeviceID());
+			list[5].set(list[1].getDeviceID());
 			list[6] = new CANTalon(6);	
 			list[6].changeControlMode(CANTalon.TalonControlMode.Follower);
-			list[6].set(rl1.getDeviceID());
+			list[6].set(list[2].getDeviceID());
 			list[7] = new CANTalon(8);	
 			list[7].changeControlMode(CANTalon.TalonControlMode.Follower);
-			list[7].set(rr1.getDeviceID());
+			list[7].set(list[3].getDeviceID());
 		}
 		
 		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
 	
 	}
+	public TalonDrive(int fl, int rl, int fr, int rr) {
+		//create first set of motors
+		list[0] = new CANTalon(fl);
+		list[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[1] = new CANTalon(fr);
+		list[1].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[2] = new CANTalon(rl);
+		list[2].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[3] = new CANTalon(rr);
+		list[3].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		
+		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
+	
+	}
+	public TalonDrive(int fl1, int rl1, int fr1, int rr1, int fl2, int rl2, int fr2, int rr2) {
+		//create first set of motors
+		list[0] = new CANTalon(fl1);
+		list[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[1] = new CANTalon(fr1);
+		list[1].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[2] = new CANTalon(rl1);
+		list[2].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		list[3] = new CANTalon(rr1);
+		list[3].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		
+		//create second set of motors
+		list[4] = new CANTalon(fl2);	
+		list[4].changeControlMode(CANTalon.TalonControlMode.Follower);
+		list[4].set(list[0].getDeviceID());
+		list[5] = new CANTalon(fr2);	
+		list[5].changeControlMode(CANTalon.TalonControlMode.Follower);
+		list[5].set(list[1].getDeviceID());
+		list[6] = new CANTalon(rl2);	
+		list[6].changeControlMode(CANTalon.TalonControlMode.Follower);
+		list[6].set(list[2].getDeviceID());
+		list[7] = new CANTalon(rr2);	
+		list[7].changeControlMode(CANTalon.TalonControlMode.Follower);
+		list[7].set(list[3].getDeviceID());
+		
+		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
+	
+	}
+	
+	
 	public void mecanumDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
 		roboDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
+	}
+	public void mecanumDrive_Polar(double magnitude, double direction, double rotation) {
+		roboDrive.mecanumDrive_Polar(magnitude, direction, rotation);
 	}
 	public void arcadeDrive(double moveValue, double rotateValue) {
 		roboDrive.arcadeDrive(moveValue, rotateValue);
 	}
+	public void tankDrive(double leftValue, double rightValue) {
+		roboDrive.tankDrive(leftValue, rightValue);
+	}
+	public void drive(double outputMagnitude, double curve) {
+		roboDrive.drive(outputMagnitude, curve);
+	}
 	
+	/**
+	 * Set how fast each side of the robot drives. (kind of like tank)
+	 * @param leftOutput - speed of left side
+	 * @param rightOutput - speed of right side.
+	 */
+	public void setLeftRightMotorOutputs(double leftOutput, double rightOutput) {
+		roboDrive.setLeftRightMotorOutputs(leftOutput, rightOutput);
+	}
 	
-	
-	
+	/**
+	 * Sets the talon ramp speed. auto ramps the talons.
+	 * @param isAuto - If your are in auto or not. Could use RoboState.isAuto()
+	 * @param rampRate - How fast you want to ramp. Research how to use correctly!
+	 */
+	public void setRampRate(boolean isAuto, double rampRate) {
+		int g = 4;
+		if (isAuto) {
+			g = 2;
+		}
+		for (int i = 0; i < g; i++) {
+			list[i].setCloseLoopRampRate(rampRate);
+		}
+	}
 	
 	
 	
