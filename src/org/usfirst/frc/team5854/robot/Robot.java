@@ -1,5 +1,4 @@
 package org.usfirst.frc.team5854.robot;
-import static com.team5854.robot.GlobalVariables.*;
 
 import com.team5854.robot.Autonomous;
 import com.team5854.robot.Disable;
@@ -25,10 +24,12 @@ public class Robot extends IterativeRobot {
 		Autonomous.init();
 	}
 
+	private int i = 0;
 	@Override
 	public void autonomousPeriodic() {
-		if (RoboState.isAuto()) {
+		if (i == 0) {
 			Autonomous.periodic();
+			i++;
 		}
 	}
 
