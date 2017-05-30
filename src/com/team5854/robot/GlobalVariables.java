@@ -11,4 +11,13 @@ public class GlobalVariables {
 	public static Joystick js1 = new Joystick(1);
 	public static TalonDrive drive = new TalonDrive(true);
 
+	public static boolean isDebug = true;
+
+	
+	
+	public static void print(String print) {
+		if (isDebug) {
+			System.out.println(print);
+		}
+	}
 }
