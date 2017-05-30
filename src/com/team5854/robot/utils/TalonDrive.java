@@ -53,6 +53,13 @@ public class TalonDrive {
 		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
 	
 	}
+	/**
+	 * CANTalon four motor drive system.
+	 * @param fl - Front Left
+	 * @param rl - Rear Left
+	 * @param fr - Front Right
+	 * @param rr - Rear Right
+	 */
 	public TalonDrive(int fl, int rl, int fr, int rr) {
 		//create first set of motors
 		list[0] = new CANTalon(fl);
@@ -67,6 +74,17 @@ public class TalonDrive {
 		roboDrive = new RobotDrive(list[0], list[2], list[1], list[3]);
 	
 	}
+	/**
+	 * CANTalon eight motor drive system
+	 * @param fl1 - Front Left One
+	 * @param rl1 - Rear Left One
+	 * @param fr1 - Front Right One
+	 * @param rr1 - Rear Right One
+	 * @param fl2 - Front Left Two
+	 * @param rl2 - Rear Left Two
+	 * @param fr2 - Front Right Two
+	 * @param rr2 - Rear Right Two
+	 */
 	public TalonDrive(int fl1, int rl1, int fr1, int rr1, int fl2, int rl2, int fr2, int rr2) {
 		//create first set of motors
 		list[0] = new CANTalon(fl1);
